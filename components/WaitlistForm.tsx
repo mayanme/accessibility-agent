@@ -175,7 +175,7 @@ export function WaitlistForm() {
 
       <Button
         type="submit"
-        variant="primary"
+        variant="gradient"
         size="lg"
         className="w-full sm:w-auto"
         disabled={loading}

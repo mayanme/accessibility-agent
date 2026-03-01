@@ -187,7 +187,19 @@ export const nav = {
   howItWorks: "How it works",
   problems: "Problems we solve",
   earlyAccess: "Get early access",
+  signIn: "Sign in",
 } as const;
+
+/** Key phrase in hero to highlight with gradient */
+export const heroGradientPhrase = "finds, fixes, and prevents";
+
+/** Stats for Problem section (4 metrics) */
+export const problemStats = [
+  { value: "15%", label: "of users have a disability" },
+  { value: "~30%", label: "of issues from dynamic UI" },
+  { value: "2.2M+", label: "ADA-related demand letters" },
+  { value: "Top 3", label: "SEO ranking factor" },
+] as const;
 
 export const footer = {
   copyright: "© AccessLab. All rights reserved.",

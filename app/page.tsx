@@ -2,17 +2,19 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { NumberedFeatureCard } from "@/components/ui/NumberedFeatureCard";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import {
   brand,
   hero,
+  heroGradientPhrase,
   problem,
+  problemStats,
   solution,
   howItWorks,
   waitlist,
 } from "@/content/copy";
+import { CodeEditorMockup } from "@/components/CodeEditorMockup";
+import { HowItWorksBlock } from "@/components/HowItWorksBlock";
 
 const TEAM_EMAIL = process.env.TEAM_CONTACT_EMAIL || "hello@accesslab.dev";
 
@@ -112,78 +114,90 @@ function StepIcon({ id }: { id: string }) {
   return <span className="text-accent">{icons[id] || null}</span>;
 }
 
+function HeroHeadline() {
+  const before = hero.headline.split(heroGradientPhrase)[0];
+  const after = hero.headline.split(heroGradientPhrase)[1] || "";
+  return (
+    <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-tight">
+      {before}
+      <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-teal-500 bg-clip-text text-transparent">
+        {heroGradientPhrase}
+      </span>
+      {after}
+    </h1>
+  );
+}
+
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero */}
-      <Section id="hero" className="hero-gradient relative overflow-hidden pt-12 pb-20 sm:pt-16 sm:pb-28">
+      {/* 1. Hero — two-column, gradient phrase, code mockup, floating orbs */}
+      <Section id="hero" className="hero-gradient relative overflow-hidden pt-24 pb-20 sm:pt-28 sm:pb-28">
         <div className="pointer-events-none absolute inset-0 select-none" aria-hidden>
-          <div className="absolute right-1/4 top-1/4 h-64 w-64 rounded-full bg-accent/5 blur-3xl" />
-          <div className="absolute bottom-1/4 left-1/4 h-48 w-48 rounded-full bg-accent/5 blur-3xl" />
+          <div className="absolute right-1/4 top-1/4 h-80 w-80 rounded-full bg-indigo-400/20 blur-3xl animate-float" />
+          <div className="absolute bottom-1/3 left-1/4 h-64 w-64 rounded-full bg-purple-400/15 blur-3xl animate-float-slow" />
+          <div className="absolute right-1/3 bottom-1/4 h-48 w-48 rounded-full bg-teal-400/15 blur-3xl animate-float" style={{ animationDelay: "1s" }} />
         </div>
         <Container className="relative">
-          <div className="mx-auto max-w-3xl text-center">
-            <Badge className="mb-6 animate-fade-in">{brand.agentName}</Badge>
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              {hero.headline}
-            </h1>
-            <p className="mt-6 text-lg text-slate-600 sm:text-xl leading-relaxed">
-              {hero.subheadline}
-            </p>
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a href="#waitlist">
-                <Button variant="primary" size="lg">
-                  {hero.ctaPrimary}
-                </Button>
-              </a>
-              <a href="#how-it-works">
-                <Button variant="secondary" size="lg">
-                  {hero.ctaSecondary}
-                </Button>
-              </a>
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+            <div className="max-w-xl">
+              <div className="mb-6 flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-sm backdrop-blur border border-slate-200/80 w-fit">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-teal-500 text-white text-xs font-bold">
+                  A
+                </span>
+                <span className="text-sm font-medium text-slate-700">{brand.agentName}</span>
+              </div>
+              <HeroHeadline />
+              <p className="mt-6 text-lg text-slate-600 leading-relaxed">
+                {hero.subheadline}
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a href="#waitlist">
+                  <Button variant="gradient" size="lg">
+                    {hero.ctaPrimary}
+                  </Button>
+                </a>
+                <a href="#how-it-works">
+                  <Button variant="secondary" size="lg">
+                    {hero.ctaSecondary}
+                  </Button>
+                </a>
+              </div>
+              <p className="mt-10 text-sm text-slate-500">
+                Built for engineering teams · Repo-native · CI-ready
+              </p>
             </div>
-            <div className="mt-16 grid gap-4 sm:grid-cols-3 sm:gap-6">
-              {hero.bullets.map((bullet, i) => (
-                <div
-                  key={i}
-                  className="group rounded-xl border border-border bg-surface/80 p-5 text-left backdrop-blur-sm transition-all hover:border-accent/30 hover:shadow-md hover:shadow-accent/5 sm:p-6"
-                >
-                  <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent transition-colors group-hover:bg-accent/20" aria-hidden>
-                    <CheckIcon />
-                  </span>
-                  <p className="text-sm text-slate-600 sm:text-base leading-relaxed">{bullet}</p>
-                </div>
-              ))}
+            <div className="relative animate-fade-in-up lg:animate-fade-in-up stagger-2">
+              <CodeEditorMockup />
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* 2. Problem */}
-      <Section id="problem" className="bg-surface-subtle">
+      {/* 2. Problem — section badge, 4-col cards, red hover, stats row */}
+      <Section id="problem" className="bg-slate-50">
         <Container>
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-600" aria-hidden>
-              <ProblemIcon />
-            </span>
-            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-              {problem.title}
-            </h2>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm">
+            <ProblemIcon />
+            The Problem
           </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {problem.reasons.map((reason, i) => (
+          <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+            {problem.title}
+          </h2>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {problem.reasons.slice(0, 4).map((reason, i) => (
               <div
                 key={i}
-                className="group flex gap-4 rounded-xl border border-border bg-surface p-5 transition-all hover:border-slate-300 hover:shadow-sm"
+                className="group flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 transition-all duration-200 hover:border-red-200 hover:shadow-md hover:shadow-red-500/5"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-sm font-semibold text-slate-500 transition-colors group-hover:bg-accent/10 group-hover:text-accent" aria-hidden>
-                  {i + 1}
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-red-500 opacity-80 transition-all group-hover:bg-red-50 group-hover:opacity-100" aria-hidden>
+                  <ProblemIcon />
                 </span>
-                <p className="text-slate-600 leading-relaxed">{reason}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{reason}</p>
               </div>
             ))}
           </div>
-          <div className="mt-16 rounded-2xl border-2 border-amber-200 bg-amber-50/80 p-8">
+          <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50/80 p-8">
             <h3 className="flex items-center gap-2 text-xl font-semibold text-amber-900">
               <WarningIcon />
               {problem.costTitle}
@@ -197,124 +211,121 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
-        </Container>
-      </Section>
-
-      {/* 3. Solution + Problems we solve */}
-      <Section id="problems">
-        <Container>
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent" aria-hidden>
-              <SolutionIcon />
-            </span>
-            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-              {solution.title}
-            </h2>
-          </div>
-          <div className="mt-6 rounded-xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
-            <p className="text-lg text-slate-700 leading-relaxed">
-              {solution.subtitle}
-            </p>
-          </div>
-          <h3 className="mt-16 text-2xl font-semibold text-slate-900">
-            {solution.problemsTitle}
-          </h3>
-          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {solution.problems.map((item) => (
-              <NumberedFeatureCard
-                key={item.id}
-                number={item.id}
-                title={item.title}
-                description={item.description}
-              />
+          <div className="mt-14 grid grid-cols-2 gap-8 lg:grid-cols-4">
+            {problemStats.map((stat, i) => (
+              <div key={i} className="text-center">
+                <p className="text-3xl font-bold text-slate-900 sm:text-4xl">{stat.value}</p>
+                <p className="mt-1 text-sm text-slate-600">{stat.label}</p>
+              </div>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* 4. How it works */}
-      <Section id="how-it-works" className="bg-surface-subtle">
-        <Container>
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent" aria-hidden>
-              <HowItWorksIcon />
-            </span>
-            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-              {howItWorks.title}
-            </h2>
+      {/* 3. Dark gradient value section — dark bg so white text is visible */}
+      <Section
+        id="problems"
+        className="relative py-20 sm:py-28 bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:24px_24px]" aria-hidden />
+        <Container className="relative">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur">
+            <SolutionIcon />
+            The Solution
           </div>
-          <div className="relative mt-12">
-            <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-accent/40 via-accent/20 to-transparent" aria-hidden />
-            <ol className="space-y-8">
-              {howItWorks.steps.map((step, idx) => (
-                <li key={step.id} className="relative flex gap-8 pl-2">
-                  <span className="absolute left-0 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-2 border-accent bg-surface text-accent shadow-sm" aria-hidden>
-                    <span className="text-sm font-bold">{String.fromCharCode(97 + idx)}</span>
-                  </span>
-                  <div className="min-w-0 flex-1 rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-accent/30 hover:shadow-md">
-                    <div className="mb-3 text-accent">
-                      <StepIcon id={step.id} />
-                    </div>
-                    <h3 className="text-lg font-semibold text-slate-900">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2 text-slate-600 leading-relaxed">{step.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2">
-            <Card className="border-accent/20 bg-accent/5 transition-all hover:border-accent/30">
-              <div className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent" aria-hidden>
-                  <CodeAgentIcon />
+          <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            {solution.title}
+          </h2>
+          <p className="mt-6 max-w-3xl text-lg text-slate-300 leading-relaxed">
+            {solution.subtitle}
+          </p>
+          <h3 className="mt-16 text-xl font-semibold text-white">
+            {solution.problemsTitle}
+          </h3>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {solution.problems.map((item) => (
+              <div
+                key={item.id}
+                className="group rounded-xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm transition-all duration-200 hover:border-indigo-400/40 hover:bg-white/15 hover:shadow-lg hover:shadow-indigo-500/10 sm:p-6"
+              >
+                <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 text-sm font-bold text-indigo-200 tabular-nums transition-colors group-hover:bg-indigo-500/40 group-hover:text-white">
+                  {item.id}
                 </span>
-                <div>
-                  <h3 className="font-semibold text-slate-900">
-                    {howItWorks.codingAgentsCallout.title}
-                  </h3>
-                  <p className="mt-2 text-slate-600 leading-relaxed">
-                    {howItWorks.codingAgentsCallout.description}
-                  </p>
-                </div>
+                <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{item.description}</p>
               </div>
-            </Card>
-            <Card className="border-slate-200 transition-all hover:border-slate-300">
-              <div className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600" aria-hidden>
-                  <ShieldIcon />
-                </span>
-                <div>
-                  <h3 className="font-semibold text-slate-900">
-                    {howItWorks.securityNote.title}
-                  </h3>
-                  <p className="mt-2 text-slate-600 leading-relaxed">
-                    {howItWorks.securityNote.description}
-                  </p>
-                </div>
-              </div>
-            </Card>
+            ))}
           </div>
         </Container>
       </Section>
 
-      {/* 5. Contact / Waitlist CTA */}
-      <Section id="waitlist">
+      {/* 4. How it works — AccessPilot-style: steps left, code + feedback right */}
+      <Section id="how-it-works" className="bg-slate-50">
         <Container>
-          <div className="mx-auto max-w-2xl">
-            <div className="overflow-hidden rounded-2xl border-2 border-accent/20 bg-gradient-to-br from-accent/5 to-surface p-8 shadow-lg sm:p-10">
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent" aria-hidden>
-                  <MailIcon />
+          <div className="max-w-3xl">
+            <span className="text-sm font-semibold uppercase tracking-wider text-indigo-600">
+              How it works
+            </span>
+            <h2 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 lg:text-5xl">
+              From issue to fix in seconds
+            </h2>
+            <p className="mt-6 text-xl leading-relaxed text-slate-600">
+              See how Atlas transforms your development workflow with real-time,
+              contextual accessibility guidance.
+            </p>
+          </div>
+          <HowItWorksBlock />
+          {/* Additional info — distinct from steps: compact callouts with left-border accent */}
+          <div className="mt-16">
+            <p className="mb-4 text-sm font-medium uppercase tracking-wider text-slate-400">
+              More to know
+            </p>
+            <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
+              <div className="flex gap-4 rounded-lg border-l-4 border-indigo-500 bg-slate-100/80 py-4 pl-5 pr-5 sm:flex-1">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-indigo-500/15 text-indigo-600" aria-hidden>
+                  <CodeAgentIcon />
                 </span>
-                <div>
-                  <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-                    {waitlist.title}
-                  </h2>
-                  <p className="mt-1 text-slate-600">{waitlist.subtitle}</p>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-semibold text-slate-900">
+                    {howItWorks.codingAgentsCallout.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                    {howItWorks.codingAgentsCallout.description}
+                  </p>
                 </div>
               </div>
+              <div className="flex gap-4 rounded-lg border-l-4 border-slate-400 bg-slate-100/80 py-4 pl-5 pr-5 sm:flex-1">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-slate-400/20 text-slate-600" aria-hidden>
+                  <ShieldIcon />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-semibold text-slate-900">
+                    {howItWorks.securityNote.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                    {howItWorks.securityNote.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* 5. Contact / Waitlist CTA — gradient card, premium feel */}
+      <Section id="waitlist" className="bg-slate-50">
+        <Container>
+          <div className="mx-auto max-w-2xl">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 sm:p-10">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 via-purple-600 to-teal-500 text-white" aria-hidden>
+                  <MailIcon />
+                </span>
+                <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+                  {waitlist.title}
+                </h2>
+              </div>
+              <p className="text-slate-600">{waitlist.subtitle}</p>
               <div className="mt-10">
                 <WaitlistForm />
               </div>
@@ -322,7 +333,7 @@ export default function HomePage() {
                 {waitlist.privacy}{" "}
                 <a
                   href={`mailto:${TEAM_EMAIL}`}
-                  className="text-accent hover:text-accent-hover underline underline-offset-2"
+                  className="text-indigo-600 hover:text-indigo-700 font-medium underline underline-offset-2"
                 >
                   {waitlist.contactLink}
                 </a>

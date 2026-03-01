@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -8,19 +8,39 @@ import { brand, nav } from "@/content/copy";
 
 export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <nav
-      className="sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/80"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/80 backdrop-blur-xl border-b border-slate-200/80 shadow-sm"
+          : "bg-transparent border-b border-transparent"
+      }`}
       aria-label="Main navigation"
     >
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <Link
-            href="/"
-            className="text-lg font-semibold text-slate-900 hover:text-accent transition-colors"
-          >
-            {brand.startupName}
+          <Link href="/" className="flex items-center gap-3">
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 via-purple-600 to-teal-500 shadow-md"
+              aria-hidden
+            >
+              <span className="text-white font-bold text-sm">A</span>
+            </span>
+            <span
+              className={`text-lg font-semibold transition-colors ${
+                scrolled ? "text-slate-900" : "text-slate-900"
+              }`}
+            >
+              {brand.startupName}
+            </span>
           </Link>
 
           <div className="hidden md:flex md:items-center md:gap-8">
@@ -36,14 +56,19 @@ export function Nav() {
             >
               {nav.problems}
             </a>
+            <a href="#" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+              {nav.signIn}
+            </a>
             <a href="#waitlist">
-              <Button size="sm">{nav.earlyAccess}</Button>
+              <Button variant="gradient" size="sm">
+                {nav.earlyAccess}
+              </Button>
             </a>
           </div>
 
           <button
             type="button"
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-600 hover:bg-surface-subtle hover:text-slate-900"
+            className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -64,24 +89,19 @@ export function Nav() {
         {mobileOpen && (
           <div
             id="mobile-menu"
-            className="md:hidden border-t border-border py-4 space-y-4"
+            className="md:hidden border-t border-slate-200 py-4 space-y-4"
           >
-            <a
-              href="#how-it-works"
-              className="block text-slate-600 hover:text-slate-900"
-              onClick={() => setMobileOpen(false)}
-            >
+            <a href="#how-it-works" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
               {nav.howItWorks}
             </a>
-            <a
-              href="#problems"
-              className="block text-slate-600 hover:text-slate-900"
-              onClick={() => setMobileOpen(false)}
-            >
+            <a href="#problems" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
               {nav.problems}
             </a>
+            <a href="#" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
+              {nav.signIn}
+            </a>
             <a href="#waitlist" onClick={() => setMobileOpen(false)}>
-              <Button variant="primary" size="md" className="w-full">
+              <Button variant="gradient" size="md" className="w-full">
                 {nav.earlyAccess}
               </Button>
             </a>
