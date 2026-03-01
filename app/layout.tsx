@@ -4,7 +4,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { brand, seo } from "@/content/copy";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://accesslab.dev";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://atlas.dev";
 
 export const metadata: Metadata = {
   title: seo.title,

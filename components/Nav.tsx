@@ -45,19 +45,22 @@ export function Nav() {
 
           <div className="hidden md:flex md:items-center md:gap-8">
             <a
-              href="#how-it-works"
+              href="#problem"
               className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
             >
-              {nav.howItWorks}
+              {nav.problem}
             </a>
             <a
               href="#problems"
               className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
             >
-              {nav.problems}
+              {nav.solution}
             </a>
-            <a href="#" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-              {nav.signIn}
+            <a
+              href="#how-it-works"
+              className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+            >
+              {nav.howItWorks}
             </a>
             <a href="#waitlist">
               <Button variant="gradient" size="sm">
@@ -91,14 +94,14 @@ export function Nav() {
             id="mobile-menu"
             className="md:hidden border-t border-slate-200 py-4 space-y-4"
           >
-            <a href="#how-it-works" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
-              {nav.howItWorks}
+            <a href="#problem" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
+              {nav.problem}
             </a>
             <a href="#problems" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
-              {nav.problems}
+              {nav.solution}
             </a>
-            <a href="#" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
-              {nav.signIn}
+            <a href="#how-it-works" className="block text-slate-600 hover:text-slate-900" onClick={() => setMobileOpen(false)}>
+              {nav.howItWorks}
             </a>
             <a href="#waitlist" onClick={() => setMobileOpen(false)}>
               <Button variant="gradient" size="md" className="w-full">

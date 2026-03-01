@@ -3,7 +3,7 @@
  */
 
 export const brand = {
-  startupName: "AccessLab",
+  startupName: "Atlas",
   agentName: "Atlas",
   fullProductName: "Accessibility Agent",
 } as const;
@@ -184,10 +184,10 @@ export const waitlist = {
 } as const;
 
 export const nav = {
+  problem: "Problem",
+  solution: "Solution",
   howItWorks: "How it works",
-  problems: "Problems we solve",
   earlyAccess: "Get early access",
-  signIn: "Sign in",
 } as const;
 
 /** Key phrase in hero to highlight with gradient */
@@ -202,11 +202,11 @@ export const problemStats = [
 ] as const;
 
 export const footer = {
-  copyright: "© AccessLab. All rights reserved.",
+  copyright: "© Atlas. All rights reserved.",
 } as const;
 
 export const seo = {
-  title: "AccessLab | Accessibility Agent — Find, Fix, Prevent",
+  title: "Atlas | Accessibility Agent — Find, Fix, Prevent",
   description:
     "Agentic accessibility: continuous find–fix loop for engagement, SEO, and compliance. Built for coding agents and modern dev workflows.",
   ogImage: "/og-image.png",

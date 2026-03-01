@@ -16,7 +16,7 @@ import {
 import { CodeEditorMockup } from "@/components/CodeEditorMockup";
 import { HowItWorksBlock } from "@/components/HowItWorksBlock";
 
-const TEAM_EMAIL = process.env.TEAM_CONTACT_EMAIL || "hello@accesslab.dev";
+const TEAM_EMAIL = process.env.TEAM_CONTACT_EMAIL || "hello@atlas.dev";
 
 function CheckIcon() {
   return (

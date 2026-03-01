@@ -66,4 +66,4 @@ Open [http://localhost:3000](http://localhost:3000).
 
 1. Connect the repo to Vercel.
 2. Add the same env vars in Vercel project settings.
-3. Set `NEXT_PUBLIC_SITE_URL` to your production URL (e.g. `https://accesslab.dev`).
+3. Set `NEXT_PUBLIC_SITE_URL` to your production URL (e.g. `https://atlas.dev`).
